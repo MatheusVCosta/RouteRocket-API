@@ -16,12 +16,14 @@ return new class extends Migration
     {
         Schema::create('redirect_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignIdFor(Redirect::class);
-            $table->ipAddress('ip_request');
+            $table->unsignedInteger('redirect_id');
+            $table->ipAddress('ip_address_request');
             $table->string('user_agent');
             $table->string('header_referer');
             $table->string('query_params');
-            $table->dateTime('dt_access');
+            $table->datetime('last_access_at')->nullable(true);
+
+            $table->foreign('redirect_id')->references('id')->on('redirects');
         });
     }
 
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('redirects');
+        Schema::dropIfExists('redirect_logs');
     }
 };

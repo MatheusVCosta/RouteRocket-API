@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\RedirectService;
+use App\Models\Redirect;
+use App\Services\CrudRedirectService;
 use Illuminate\Support\ServiceProvider;
 
 class RedirectServiceProvider extends ServiceProvider
@@ -14,8 +15,8 @@ class RedirectServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('redirectservice', function () {
-            return new RedirectService();
+        $this->app->bind('crudredirectservice', function () {
+            return new CrudRedirectService(new Redirect);
         });
     }
 

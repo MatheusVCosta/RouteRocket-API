@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\CrudRedirectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::controller(RedirectController::class)->group(function ($api) {
+
+Route::controller(CrudRedirectController::class)->group(function ($api) {
     $api->get('/redirect', 'index');
+    $api->post('/redirect', 'create');
+    $api->put('/redirect/{redirect_code}', 'update');
+    $api->delete('/redirect/{redirect_code}', 'delete');
 });

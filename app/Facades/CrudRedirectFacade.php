@@ -4,7 +4,7 @@ namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class RedirectFacade extends Facade
+class CrudRedirectFacade extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class RedirectFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'redirectservice';
+        return 'crudredirectservice';
     }
 }

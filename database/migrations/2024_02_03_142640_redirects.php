@@ -15,8 +15,14 @@ return new class extends Migration
     {
         Schema::create('redirects', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code');
+            $table->string('code')
+                ->nullable(true)
+                ->unique();
+
             $table->string('url_target');
+            $table->boolean('status')
+                ->default(true);
+                
             $table->timestamps();
             $table->softDeletes();
         });
