@@ -196,7 +196,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'CrudRedirectService' => App\Facades\CrudRedirectFacade::class
+        'CrudRedirectService' => App\Facades\CrudRedirectFacade::class,
+        'RedirectService'     => App\Facades\RedirectFacade::class,
+        'RedirectLogService'  => App\Facades\RedirectLogFacade::class,
     ])->toArray(),
 
 ];
