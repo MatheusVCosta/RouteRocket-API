@@ -31,19 +31,15 @@ class RedirectController extends Controller
             ]);
         }
 
-        $ipRequest   = $request->ip();
-        $userAgent   = $request->userAgent();
-        $httpReferer = $request->header('Referer', '');
-
         $targetUrl = $redirectResponse['redirect_to']->getTargetUrl();
         $targetUrlExplode = explode('?', $targetUrl);
         
         $redirectLogArr = [
             'redirect_id'        => $redirectResponse['redirect_id'],
-            'ip_address_request' => $ipRequest,
-            'user_agent'         => $userAgent,
-            'header_referer'     => $httpReferer,
-            'query_params'       => $targetUrlExplode[1],
+            'ip_address_request' => $request->ip(),
+            'user_agent'         => $request->userAgent(),
+            'header_referer'     => $request->header('Referer', ''),
+            'query_params'       => isset($targetUrlExplode[1]) ? $targetUrlExplode[1] : '',
             'last_access_at'     => \Carbon\Carbon::now()
         ];
 
