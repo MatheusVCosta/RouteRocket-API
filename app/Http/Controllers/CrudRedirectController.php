@@ -27,6 +27,17 @@ class CrudRedirectController extends Controller
         return RedirectService::findAll();
     }
 
+    /**
+     * Api to create a new redirect
+     * 
+     * @method POST
+     * 
+     * @param Request $request
+     * 
+     * @api /api/redirect
+     * 
+     * @return bool
+     */
     public function create(CreateRedirectRequest $request)
     {
         $params  = $request->all();
@@ -53,6 +64,17 @@ class CrudRedirectController extends Controller
         ]);
     }
 
+    /**
+     * Api to update a redirect
+     * 
+     * @method PUT
+     * 
+     * @param Request $request
+     * 
+     * @api /api/redirect/<redirect_code>
+     * 
+     * @return bool
+     */
     public function update(string $redirect_code, UpdateRedirectRequest $request)
     {
         $params = $request->all();
@@ -69,6 +91,17 @@ class CrudRedirectController extends Controller
         ]);
     }
 
+    /**
+     * Api to delete and disable a redirect
+     * 
+     * @method DELETE
+     * 
+     * @param string $redirect_code
+     * 
+     * @api /api/redirect/<redirect_code>
+     * 
+     * @return bool
+     */
     public function delete(string $redirect_code)
     {
         $redirectResponse = RedirectService::delete($redirect_code);
@@ -81,6 +114,17 @@ class CrudRedirectController extends Controller
         return response()->json(['message' => 'Redirect deleted with success', 200]);
     }
 
+    /**
+     * Api to list Statics in the last 10 days
+     * 
+     * @method Get
+     * 
+     * @param string $redirect_code
+     * 
+     * @api /api/redirect/<redirect_code>/stats
+     * 
+     * @return json
+     */
     public function stats(string $redirect_code) 
     {
         $redirectStats = RedirectService::getRedirectStats($redirect_code);
@@ -90,6 +134,17 @@ class CrudRedirectController extends Controller
         return response()->json($redirectStats, 200);
     }
 
+    /**
+     * Api to list logs about redirect by $redirect_code
+     * 
+     * @method GET
+     * 
+     * @param string $redirect_code
+     * 
+     * @api /api/redirect/redirect_code/logs
+     * 
+     * @return json
+     */
     public function logs(string $redirect_code) 
     {
         $redirectLogs = RedirectService::getRedirectLogs($redirect_code);

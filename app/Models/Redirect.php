@@ -35,21 +35,43 @@ class Redirect extends Model
     ];
 
 
+    /**
+    * Translate status of boolean for string
+    *
+    * @return string
+    */
     public function isDisable()
     {
         return $this->status == 1 ? "Ativado" : "Desativado";
     }
 
+    /**
+    * check if items is deleted
+    *
+    * @return boolean
+    */
     public function isDeleted()
     {
         return !is_null($this->deleted_at) ? true : false;
     }
 
+    /**
+    * scope to find a redirect by code
+    *   
+    * @param string $code
+    *
+    * @return $this
+    */
     public function scopeFindByCode(string $code)
     {
         return $this->where('code', '=', $code);
     }
 
+    /**
+    * relationship with redirectLogs
+    *
+    * @return $this
+    */
     public function redirectLogs()
     {
         return $this->belongsTo(RedirectLog::class, 'id', 'redirect_id');

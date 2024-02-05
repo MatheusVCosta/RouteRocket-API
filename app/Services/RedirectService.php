@@ -22,12 +22,24 @@ class RedirectService implements RedirectInterface
         $this->hashId = new Hashids('', 10);
     }
 
-    public function findAll() : Collection
+    /**
+    * find all redirect
+    *
+    * @return Collection
+    */
+    public function findAll(): Collection
     {
         $allRedirects = $this->redirectModel->all();
         return $allRedirects;
     }
 
+    /**
+    * Create a new redirect
+    *   
+    * @param array $params
+    *
+    * @return bool|Exception
+    */
     public function create(array $params): bool| Exception
     {   
         try {
@@ -60,6 +72,13 @@ class RedirectService implements RedirectInterface
 
     }
 
+    /**
+    * update redirect
+    *   
+    * @param string|int $identifier
+    *
+    * @return bool|Exception
+    */
     public function update(string| int $identifier, array $params): bool| Exception
     {
         if (is_string($identifier)) {
@@ -74,6 +93,13 @@ class RedirectService implements RedirectInterface
         return $redirectUpdated->update($params);
     }
 
+    /**
+    * delete a redirect
+    *   
+    * @param string $redirectCode
+    *
+    * @return bool|Exception
+    */
     public function delete(string $redirectCode): bool| Exception
     {
         $identifier = $this->_decodeHashCode($redirectCode);
@@ -92,6 +118,13 @@ class RedirectService implements RedirectInterface
         return true;
     }
 
+    /**
+    * Fetch redirect stats in the last 10 days
+    *   
+    * @param string $redirectCode
+    *
+    * @return array
+    */
     public function getRedirectStats(string $redirectCode): array
     {
         $id_decoded = $this->_decodeHashCode($redirectCode);
@@ -128,6 +161,13 @@ class RedirectService implements RedirectInterface
         ];
     }
 
+    /**
+    * Fetch logs access of redirect
+    *   
+    * @param string $redirectCode
+    *
+    * @return Collection
+    */
     public function getRedirectLogs(string $redirectCode): Collection
     {
         $id_decoded = $this->_decodeHashCode($redirectCode);
@@ -149,6 +189,14 @@ class RedirectService implements RedirectInterface
         return $redirectLogs;
     }
 
+    /**
+    * Make redirect to url target
+    *   
+    * @param string $redirectCode
+    * @param array $queryParams
+
+    * @return array|Exception
+    */
     public function redirectByHashCode(string $redirectCode, array $queryParams): array|Exception
     {
         $client   = new Client();
@@ -192,12 +240,25 @@ class RedirectService implements RedirectInterface
         ];
     }
 
-
+    /**
+    * generate a hash bases in redirect id using Hashids Lib
+    *   
+    * @param string $value
+    *
+    * @return string
+    */
     private function _generateHashCodeById(string $value): string
     {
         return $this->hashId->encode($value);
     }
 
+    /**
+    * decode hash code based in redirect id
+    *   
+    * @param string $value
+    *
+    * @return int
+    */
     private function _decodeHashCode(string $value): int
     {
         $hashDecoded = $this->hashId->decode($value);

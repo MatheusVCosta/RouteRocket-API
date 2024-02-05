@@ -39,11 +39,21 @@ class RedirectLog extends Model
         'updated_at',
     ];
 
+    /**
+    * scope to get totalAccess by date limit
+    *
+    * @return $this
+    */
     public function scopeGetTotalAccessByDate(Builder $query, DateTime $date): void
     {
         $query->where('last_access_at', '>=', $date);
     }
 
+    /**
+    * scope to get unique ips that accessed a URL
+    *
+    * @return $this
+    */
     public function scopeGetUniqueIps(Builder $query, DateTime $date = null): void
     {
         $query = $query->select(DB::raw('count(ip_address_request) as total'));
@@ -55,6 +65,11 @@ class RedirectLog extends Model
             ->havingRaw('count(ip_address_request) = 1');
     }
 
+     /**
+    * relationship with redirect model
+    *
+    * @return $this
+    */
     public function redirect()
     {
         return $this->hasMany(Redirect::class, 'id', 'redirect_id');

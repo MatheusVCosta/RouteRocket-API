@@ -11,6 +11,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class RedirectLogService
 {
+    /**
+    * redirect log model
+    *
+    * @var $redirectLogModel
+    */
     protected $redirectLogModel;
 
     public function __construct(RedirectLog $redirectLogModel)
@@ -19,6 +24,13 @@ class RedirectLogService
 
     }
 
+    /**
+    * create a new redirectLog
+    * 
+    * @param array $param 
+    *
+    * @return $bool
+    */
     public function create(array $params): bool
     {   
         $created = $this->redirectLogModel->create($params);

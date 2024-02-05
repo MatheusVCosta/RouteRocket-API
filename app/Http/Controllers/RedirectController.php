@@ -9,7 +9,17 @@ use RedirectLogService;
 
 class RedirectController extends Controller
 {
-    
+    /**
+     * Redirect user to specified target URL
+     * 
+     * @method Get
+     * 
+     * @param string $redirect_code
+     * 
+     * @api /r/<redirect_code>
+     * 
+     * @return redirect
+     */
     public function redirectTo(string $hash_code, Request $request)
     {
         $redirectResponse = RedirectService::redirectByHashCode($hash_code, $request->query());
