@@ -18,6 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::controller(RedirectController::class)->group(function ($api) {
-    $api->get('/r/{hash_code}', 'redirectTo');
+Route::controller(RedirectController::class)->group(function ($web) {
+    $web->get('/r/{hash_code}', 'redirectTo');
 });

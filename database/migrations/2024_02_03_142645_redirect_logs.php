@@ -16,12 +16,12 @@ return new class extends Migration
     {
         Schema::create('redirect_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('redirect_id');
-            $table->ipAddress('ip_address_request');
-            $table->string('user_agent');
-            $table->string('header_referer');
-            $table->string('query_params');
-            $table->datetime('last_access_at')->nullable(true);
+            $table->unsignedInteger('redirect_id')->nullable(true);
+            $table->ipAddress('ip_address_request')->nullable(true);
+            $table->string('user_agent')->nullable(true);
+            $table->string('header_referer')->nullable(true);
+            $table->string('query_params')->nullable(true);
+            $table->datetime('last_access_at');
 
             $table->foreign('redirect_id')->references('id')->on('redirects');
         });

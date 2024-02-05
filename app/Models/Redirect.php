@@ -33,4 +33,20 @@ class Redirect extends Model
         'created_at',
         'updated_at',
     ];
+
+
+    public function isDisable()
+    {
+        return $this->status == 1 ? "Ativado" : "Desativado";
+    }
+
+    public function isDeleted()
+    {
+        return !is_null($this->deleted_at) ? true : false;
+    }
+
+    public function scopeFindByCode(string $code)
+    {
+        return $this->where('code', '=', $code);
+    }
 }

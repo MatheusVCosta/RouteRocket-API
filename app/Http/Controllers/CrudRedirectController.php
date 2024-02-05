@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use CrudRedirectService;
+use RedirectService;
 
 class CrudRedirectController extends Controller
 {
@@ -17,23 +17,23 @@ class CrudRedirectController extends Controller
      */
     public function index() 
     {
-        return CrudRedirectService::findAll();
+        return RedirectService::findAll();
     }
 
     public function create(Request $request)
     {
         $params = $request->all();
-        return CrudRedirectService::create($params);
+        return RedirectService::create($params);
     }
 
     public function update(string $redirect_code, Request $request)
     {
         $params = $request->all();
-        return CrudRedirectService::update($redirect_code, $params);
+        return RedirectService::update($redirect_code, $params);
     }
 
     public function delete(string $redirect_code)
     {
-        return CrudRedirectService::delete($redirect_code);
+        return RedirectService::delete($redirect_code);
     }
 }
