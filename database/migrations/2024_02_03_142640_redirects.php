@@ -17,7 +17,8 @@ return new class extends Migration
             $table->increments('id');
             $table->string('code')
                 ->nullable(true)
-                ->unique();
+                ->unique()
+                ->index();
 
             $table->string('url_target');
             $table->boolean('status')

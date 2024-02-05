@@ -25,7 +25,7 @@ class CrudRedirectControlerTest extends TestCase
     public function test_create_redirect_success()
     {
         $redirectFaker = Redirect::factory()->make(
-            ['url_target' => "https://www.teste.com"]
+            ['url_target' => "https://www.google.com"]
         );
         
         $response = $this->post(self::URL_PATH_REDIRECT, [
@@ -78,8 +78,7 @@ class CrudRedirectControlerTest extends TestCase
      */
     public function test_create_redirect_error_without_https()
     {
-        $invalidUrl = "www.teste.com";
-        $redirectFaker = Redirect::factory()->make();
+        $invalidUrl = "www.google.com";
         $response = $this->post(self::URL_PATH_REDIRECT, [
             'url_target' => $invalidUrl
         ]);

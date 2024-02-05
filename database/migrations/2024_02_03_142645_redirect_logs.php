@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('redirect_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('redirect_id')->nullable(true);
+            $table->unsignedInteger('redirect_id')->nullable(true)->index();
             $table->ipAddress('ip_address_request')->nullable(true);
             $table->string('user_agent')->nullable(true);
             $table->string('header_referer')->nullable(true);

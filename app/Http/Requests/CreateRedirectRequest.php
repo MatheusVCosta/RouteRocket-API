@@ -57,7 +57,8 @@ class CreateRedirectRequest extends FormRequest
                 'url:https',
                 'unique:redirects', 
                 function ($attribute, $value, $fail) {
-                    if (!checkdnsrr($value)) {
+                    $url = parse_url($value);
+                    if (!checkdnsrr(isset($url['host']) ? $url['host'] : $value, 'ANY')) {
                         $fail('O DNS fornecido não é válido.');
                     }
                 },],
