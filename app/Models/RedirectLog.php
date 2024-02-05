@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use DateTime;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class RedirectLog extends Model
 {
@@ -35,6 +38,22 @@ class RedirectLog extends Model
         'last_access_at',
         'updated_at',
     ];
+
+    public function scopeGetTotalAccessByDate(Builder $query, DateTime $date): void
+    {
+        $query->where('last_access_at', '>=', $date);
+    }
+
+    public function scopeGetUniqueIps(Builder $query, DateTime $date = null): void
+    {
+        $query = $query->select(DB::raw('count(ip_address_request) as total'));
+        if ($date) {
+            $query->where('last_access_at', '>=', $date);
+        }
+        
+        $query->groupBy('ip_address_request')
+            ->havingRaw('count(ip_address_request) = 1');
+    }
 
     public function redirect()
     {

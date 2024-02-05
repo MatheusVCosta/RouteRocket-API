@@ -24,4 +24,7 @@ Route::controller(CrudRedirectController::class)->group(function ($api) {
     $api->post('/redirect', 'create');
     $api->put('/redirect/{redirect_code}', 'update');
     $api->delete('/redirect/{redirect_code}', 'delete');
+
+    $api->get('/redirect/{redirect_code}/stats', 'stats');
+    $api->get('/redirect/{redirect_code}/logs', 'logs');
 });

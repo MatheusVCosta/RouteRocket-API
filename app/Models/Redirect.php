@@ -49,4 +49,9 @@ class Redirect extends Model
     {
         return $this->where('code', '=', $code);
     }
+
+    public function redirectLogs()
+    {
+        return $this->belongsTo(RedirectLog::class, 'id', 'redirect_id');
+    }
 }
