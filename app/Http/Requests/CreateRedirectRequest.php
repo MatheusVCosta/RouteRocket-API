@@ -50,9 +50,17 @@ class CreateRedirectRequest extends FormRequest
      * @return array<string, mixed>
      */
     public function rules()
-    {
+    { 
         return [
-            'url_target' => 'required|url:https|unique:redirects',
+            'url_target' => [
+                'required',
+                'url:https',
+                'unique:redirects', 
+                function ($attribute, $value, $fail) {
+                    if (!checkdnsrr($value)) {
+                        $fail('O DNS fornecido não é válido.');
+                    }
+                },],
         ];
     }
 
