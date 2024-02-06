@@ -21,7 +21,7 @@ me dando mais facilidade em acessar as funcionalidas
 assim também tiro a necessidade de instaciar a Model direto na controller.
 
 ## Funcionalidades desenvolvidas 👷:
-Bom as funcionalidas segui as sujestões fornecidas no .README do repositório original, sendo elas:
+Bom as funcionalidas segui as sugestões fornecidas no .README do repositório original, sendo elas:
 
 #### CRUD:
 | Método  | Rota                                  | Descrição                          |
