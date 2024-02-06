@@ -6,10 +6,8 @@ use App\Http\Requests\CreateRedirectRequest;
 use App\Http\Requests\UpdateRedirectRequest;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\JsonResponse;
 use RedirectService;
+
 
 class CrudRedirectController extends Controller
 {

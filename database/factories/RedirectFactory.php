@@ -19,7 +19,7 @@ class RedirectFactory extends Factory
         return [
             'code'       => $this->faker->uuid(),
             'url_target' => $this->faker->url(),
-            'status'     => $this->faker->boolean(),
+            'status'     => $this->faker->randomElement([1, 0]),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

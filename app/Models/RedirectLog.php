@@ -65,6 +65,20 @@ class RedirectLog extends Model
             ->havingRaw('count(ip_address_request) = 1');
     }
 
+    /**
+    * scope to get unique ips that accessed a URL
+    *
+    * @return $this
+    */
+    public function scopeGetTopReferer(Builder $query): void
+    {
+        $query = $query->select(DB::raw('header_referer, count(header_referer) as top_referers'));
+        $query->groupBy('header_referer')
+            ->orderByDesc('top_referers');
+    }
+
+    
+
      /**
     * relationship with redirect model
     *

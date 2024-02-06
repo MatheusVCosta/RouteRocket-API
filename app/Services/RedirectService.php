@@ -4,10 +4,9 @@ namespace App\Services;
 
 use App\Interfaces\RedirectInterface;
 use App\Models\Redirect;
-use DateTime;
+use Vinkla\Hashids\Facades\Hashids;
 use Exception;
 use GuzzleHttp\Client;
-use Hashids\Hashids;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -143,7 +142,8 @@ class RedirectService implements RedirectInterface
         $last_days   = \Carbon\Carbon::today()->subDays(10);
         $totalAccess = $redirectLog->count();
         $uniqueIps   = $redirectLog->getUniqueIps()->count();
-        
+
+        $topReferers = $redirectLog->getTopReferer()->get()->toArray();
         // refreshing in model to make query again
         $redirectLog->refresh();
 
@@ -153,6 +153,7 @@ class RedirectService implements RedirectInterface
         return [
             'total'         => $totalAccess,
             'unique_ips'    => $uniqueIps,
+            'topReferers'   => $topReferers,
             'last_ten_days' => [
                 'total'         => $totalAccessInLastDays,
                 'unique_ips'    => $uniqueAccessInLastDays,
@@ -213,19 +214,8 @@ class RedirectService implements RedirectInterface
             return new Exception("It's redirect is disabled: <$redirectCode>", 204);
         }
 
-        if ($queryParams) {
-            if (str_contains($redirect->url_target, '?')) {
-                $targetUrlExplode = explode('?', $redirect->url_target);
-                parse_str($targetUrlExplode[1], $output);
-                $queryParams = array_merge($queryParams, $output);
-            }
-            $queryParams = http_build_query($queryParams);
-        
-            $redirect->url_target = $redirect->url_target . "?" . $queryParams;
-        }
-
-        
-        $responseRedirect = redirect()->away($redirect->url_target);
+        $url_target       = $this->generateTargetUrl($queryParams, $redirect->url_target);
+        $responseRedirect = redirect()->away($url_target);
         $response         = $client->get($responseRedirect->getTargetUrl());
         
         if ($response->getStatusCode() < 200 || $response->getStatusCode() > 308) {
@@ -240,6 +230,32 @@ class RedirectService implements RedirectInterface
         ];
     }
 
+    public function generateTargetUrl($queryParams, $url_target) 
+    {
+        if ($queryParams) {
+            if (str_contains($url_target, '?')) {
+                $targetUrlExplode = explode('?', $url_target);
+                parse_str($targetUrlExplode[1], $output);
+                
+                foreach($queryParams as $key => $value) {
+                    if (isset($output[$key])) {
+                        if (!empty($queryParams[$key])) {
+                            $output[$key] = $value;
+                        }
+                    }
+                }
+
+                $queryParams = array_merge($queryParams, $output);
+                
+                $queryParams = http_build_query($queryParams);
+                return $targetUrlExplode[0] . "?" . $queryParams;
+            }
+            $queryParams = http_build_query($queryParams);
+            return $url_target . "?" . $queryParams;
+        }
+        return $url_target;
+    }
+
     /**
     * generate a hash bases in redirect id using Hashids Lib
     *   
@@ -249,7 +265,7 @@ class RedirectService implements RedirectInterface
     */
     private function _generateHashCodeById(string $value): string
     {
-        return $this->hashId->encode($value);
+        return Hashids::encode($value);
     }
 
     /**
@@ -261,7 +277,7 @@ class RedirectService implements RedirectInterface
     */
     private function _decodeHashCode(string $value): int
     {
-        $hashDecoded = $this->hashId->decode($value);
+        $hashDecoded = Hashids::decode($value);
         if (empty($hashDecoded)) {
             throw new Exception(
                 "Check the hash identifier of the redirect: <$value>"
