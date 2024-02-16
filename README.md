@@ -1,7 +1,7 @@
 # RouteRocket-API
 
 ## Descrição
-Teste realizado para a empresa Payt, onde o desafio foi desenvolver uma API que fizesse redirects para sites salvos na base cadastrado pelo usuário.
+API densenvolvida para fazer redirects
 
 ## O que foi usado
 ### Para desenvolvimento foi utilizado 🧰 :
@@ -10,7 +10,7 @@ Teste realizado para a empresa Payt, onde o desafio foi desenvolver uma API que 
 - MySql
   
 ### Bibliotecas 📖 :
- - HashIds (Sugerida pela Payt para gerar hashs através do ID)
+ - HashIds
  - Guzzle
 
 ### Para manter o código organizado e tentar reaproveitar o maximo do código, ultilizei:
@@ -33,9 +33,6 @@ Bom as funcionalidas segui as sugestões fornecidas no .README do repositório o
 | GET     | /api/redirects/{redirect_code}/stats  | Listar estatísticas referente aos 10 últimos dias         |
 | GET     | /api/redirects/{redirect_code}/logs   | Listar logs de acessos referente a um redirect            |
 | GET     | /r/{redirect_code}                    | Redirecionar para a url de destino usando o redirect_code |
-
-### Redirecionamento funcionando 🚀
-[Gravação de tela de 2024-02-05 18-34-11.webm](https://github.com/MatheusVCosta/payt/assets/38003078/36baec45-b28c-4743-aa13-376f9c0304c9)
 
 ### Como iniciar o projeto
 Para iniciar o projeto:
